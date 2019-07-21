@@ -1,0 +1,64 @@
+version: '3.7'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch
+    environment:
+    - discovery.type=single-node
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    container_name: kibana
+    networks:
+      - esnet
+    ports:
+      - 5601:5601
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.2.0
+    container_name: logstash
+    networks:
+      - esnet
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
+      - kibana
+  filebeats:
+    image: docker.elastic.co/beats/filebeat:7.2.0
+    container_name: filebeats
+    user: root
+    networks:
+      - esnet
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat.yml:ro
+      # - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    depends_on:
+      - elasticsearch
+      - logstash
+      - kibana
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
+
+networks:
+  esnet:

@@ -1,0 +1,91 @@
+version: '3.1'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    container_name: kibana
+    networks:
+      - esnet
+    ports:
+      - 5601:5601
+    environment:
+      SERVER_NAME: kibana
+      #ELASTICSEARCH_URL: http://elasticsearch
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      # XPACK_MONITORING_ENABLED: xpack.monitoring.enabled
+    depends_on:
+      - elasticsearch
+  # logstash:
+  #   #image: docker.elastic.co/logstash/logstash-oss:6.2.4
+  #   image: docker.elastic.co/logstash/logstash:7.2.0
+  #   container_name: logstash
+  #   #entrypoint: /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d --debug --config.reload.automatic
+  #   #entrypoint: logstash -f /etc/logstash/conf.d --debug
+  #   #entrypoint: logstash -f /etc/logstash/conf.d/car.config
+  #   entrypoint: logstash -f /etc/logstash/conf.d/IIS.conf --debug
+  #   volumes:
+  #     - ./var/log/:/host/var/log/
+  #     - ./logstash/conf.d:/etc/logstash/conf.d
+  #     - ./config/:/usr/share/logstash/config/
+  #     - ./pipeline/:/usr/share/logstash/pipeline/
+  #   environment:
+  #     PIPELINE_WORKERS: pipeline.workers
+  #     #LOG_LEVEL: debug
+  #   ports:
+  #     - 5044:5044
+  #   networks:
+  #     - esnet
+  #   depends_on:
+  #     - elasticsearch
+  #     - kibana
+  # filebeats:
+  #   image: docker.elastic.co/beats/filebeat:6.2.4
+  #   container_name: filebeats
+  #   volumes:
+  #     - ./logbeats/:/logbeats
+  #     - ./config_tmp/:/usr/share/filebeat/config_tmp
+  #   networks:
+  #     - esnet
+  #   depends_on:
+  #     - elasticsearch
+  #     - kibana
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
+
+networks:
+  esnet:

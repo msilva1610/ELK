@@ -1,3 +1,6 @@
 .vagrant
 .git
+.vscode
+venv
 curso
+*.log

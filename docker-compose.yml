@@ -44,11 +44,12 @@ services:
   filebeats:
     image: docker.elastic.co/beats/filebeat:7.2.0
     container_name: filebeats
-    user: root
+    # user: filebeat
     networks:
       - esnet
     volumes:
-      - ./filebeat/filebeat.yml:/usr/share/filebeat.yml:ro
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./logbeats/:/usr/share/filebeat/logs
       # - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     depends_on:
       - elasticsearch

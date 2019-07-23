@@ -1,0 +1,129 @@
+{
+  "_index": "logstash-2019.07.21-000001",
+  "_type": "_doc",
+  "_id": "O023GmwBor04I_T5hyu9",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "method": "post",
+    "destination": {
+      "bytes": 235,
+      "ip": "192.168.100.20",
+      "port": 80
+    },
+    "tags": [
+      "beats_input_raw_event"
+    ],
+    "server": {
+      "bytes": 235,
+      "ip": "192.168.100.20",
+      "port": 80
+    },
+    "http": {
+      "response": {
+        "bytes": 235,
+        "headers": {
+          "content-type": "application/json",
+          "content-length": 72
+        },
+        "status_phrase": "ok",
+        "status_code": 200,
+        "body": {
+          "bytes": 72
+        }
+      },
+      "version": "1.1",
+      "request": {
+        "bytes": 270,
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "content-length": 47
+        },
+        "method": "post",
+        "body": {
+          "bytes": 47
+        }
+      }
+    },
+    "status": "OK",
+    "client": {
+      "bytes": 270,
+      "ip": "192.168.100.1",
+      "port": 54567
+    },
+    "url": {
+      "domain": "192.168.100.20",
+      "query": "company=ENOMEN&gender=female&name=Terri+Sampson",
+      "scheme": "http",
+      "full": "http://192.168.100.20/cliente/?company=ENOMEN&gender=female&name=Terri+Sampson",
+      "path": "/cliente/"
+    },
+    "source": {
+      "bytes": 270,
+      "ip": "192.168.100.1",
+      "port": 54567
+    },
+    "agent": {
+      "id": "0fb5e755-e086-4398-99f2-a6665929aef6",
+      "version": "7.2.0",
+      "hostname": "nginx02",
+      "ephemeral_id": "9c3803d8-9799-4f37-a74c-b4512bc975ba",
+      "type": "packetbeat"
+    },
+    "ecs": {
+      "version": "1.0.0"
+    },
+    "user_agent": {
+      "original": "python-requests/2.22.0"
+    },
+    "@timestamp": "2019-07-22T17:25:30.748Z",
+    "@version": "1",
+    "query": "POST /cliente/",
+    "event": {
+      "dataset": "http",
+      "category": "network_traffic",
+      "end": "2019-07-22T17:25:30.754Z",
+      "start": "2019-07-22T17:25:30.748Z",
+      "kind": "event",
+      "duration": 6037000
+    },
+    "host": {
+      "id": "0ca152ed753e446e9c3dad4cf039a8ec",
+      "os": {
+        "platform": "ubuntu",
+        "codename": "xenial",
+        "family": "debian",
+        "kernel": "4.4.0-154-generic",
+        "version": "16.04.6 LTS (Xenial Xerus)",
+        "name": "Ubuntu"
+      },
+      "architecture": "x86_64",
+      "hostname": "nginx02",
+      "containerized": false,
+      "name": "nginx02"
+    },
+    "network": {
+      "bytes": 505,
+      "protocol": "http",
+      "community_id": "1:FYNhdk0SeJgURdnkQatJxVCqBvo=",
+      "transport": "tcp",
+      "direction": "inbound",
+      "type": "ipv4"
+    },
+    "type": "http"
+  },
+  "fields": {
+    "event.start": [
+      "2019-07-22T17:25:30.748Z"
+    ],
+    "event.end": [
+      "2019-07-22T17:25:30.754Z"
+    ],
+    "@timestamp": [
+      "2019-07-22T17:25:30.748Z"
+    ]
+  },
+  "sort": [
+    1563816330748
+  ]
+}

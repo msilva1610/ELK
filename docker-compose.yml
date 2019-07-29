@@ -41,20 +41,20 @@ services:
     depends_on:
       - elasticsearch
       - kibana
-  filebeats:
-    image: docker.elastic.co/beats/filebeat:7.2.0
-    container_name: filebeats
-    # user: filebeat
-    networks:
-      - esnet
-    volumes:
-      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./logbeats/:/usr/share/filebeat/logs
-      # - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
+  # filebeats:
+  #   image: docker.elastic.co/beats/filebeat:7.2.0
+  #   container_name: filebeats
+  #   # user: filebeat
+  #   networks:
+  #     - esnet
+  #   volumes:
+  #     - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+  #     - ./logbeats/:/usr/share/filebeat/logs
+  #     # - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+  #   depends_on:
+  #     - elasticsearch
+  #     - logstash
+  #     - kibana
 volumes:
   esdata1:
     driver: local

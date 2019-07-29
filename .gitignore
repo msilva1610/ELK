@@ -5,3 +5,5 @@ venv
 curso
 *.log
 nginx.box
+*.rpm
+ELKDownloadCentos
